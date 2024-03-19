@@ -850,10 +850,10 @@ class Ttlock {
   }
 
 
-  static configIp(info:WifiLockServerInfo, lockData: string, success: null | (() => void), fail: null | ((errorCode: number, description: string) => void)) {
+  static configIp(info: WifiLockServerInfo, lockData: string, success: null | (() => void), fail: null | ((errorCode: number, description: string) => void)) {
     success = success || this.defaultCallback;
     fail = fail || this.defaultCallback;
-    ttlockModule.configIp(info,lockData, success, fail);
+    ttlockModule.configIp(info, lockData, success, fail);
   }
 
 
@@ -1079,4 +1079,11 @@ enum GatewayIpSettingType {
   DHCP = 1
 }
 
-export { Ttlock, TtGateway, TtRemoteKey, TtDoorSensor, TtWirelessKeypad, BluetoothState, LockFunction, LockRecordType, LockConfigType, LockPassageMode, LockControlType, LockState, ConnectState, GatewayType, GatewayIpSettingType, LockSoundVolume, TtRemoteKeyEvent, TtDoorSensorEvent, LockUnlockDirection, LockAccessoryType, ScanLockModal, ScanRemoteKeyModal, ScanDoorSensorModal, DeviceSystemModal, WirelessKeypadEvent, ScanWirelessKeypadModal, WifiLockServerInfo }
+export {
+  Ttlock, TtGateway, TtRemoteKey, TtDoorSensor, TtWirelessKeypad,
+   BluetoothState, LockFunction, LockRecordType, LockConfigType,
+    LockPassageMode, LockControlType, LockState, ConnectState, 
+    GatewayType, GatewayIpSettingType, LockSoundVolume, 
+    TtRemoteKeyEvent, TtDoorSensorEvent, LockUnlockDirection, LockAccessoryType,
+  WirelessKeypadEvent
+}
