@@ -298,6 +298,19 @@ RCT_EXPORT_METHOD(addFingerprint:(NSArray *)cycleList startDate:(nonnull NSNumbe
     }];
 }
 
+
+RCT_EXPORT_METHOD(getAllValidFingerprintsWithLockData:(NSString *)lockData mac:(NSString *)devMac success:(RCTResponseSenderBlock)success fail:(RCTResponseSenderBlock)fail)
+{
+    
+    __weak Ttlock *weakSelf = self;
+   [TTLock getAllValidFingerprintsWithLockData:lockData success:^(NSString *allFingerprintsJsonString) {
+         [Ttlock response:allFingerprintsJsonString success:success];
+    } failure:^(TTError errorCode, NSString *errorMsg) {
+        [Ttlock response:errorCode message:errorMsg fail:fail];
+    }];
+}
+
+
 RCT_EXPORT_METHOD(modifyFingerprintValidityPeriod:(NSString *)fingerprintNumber cycleList:(NSArray *)cycleList startDate:(nonnull NSNumber *)startDate endDate:(nonnull NSNumber *)endDate lockData:(NSString *)lockData success:(RCTResponseSenderBlock)success fail:(RCTResponseSenderBlock)fail)
 {
     
@@ -307,6 +320,8 @@ RCT_EXPORT_METHOD(modifyFingerprintValidityPeriod:(NSString *)fingerprintNumber 
         [Ttlock response:errorCode message:errorMsg fail:fail];
     }];
 }
+
+
 
 
 RCT_EXPORT_METHOD(deleteFingerprint:(NSString *)fingerprintNumber lockData:(NSString *)lockData success:(RCTResponseSenderBlock)success fail:(RCTResponseSenderBlock)fail)

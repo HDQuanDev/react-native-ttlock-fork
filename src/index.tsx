@@ -4,7 +4,20 @@ import {
   // EmitterSubscription,
 } from 'react-native';
 
-import type { ScanGatewayModal, ScanLockModal, InitGatewayParam, CycleDateParam, ScanWifiModal, InitGatewayModal, LockVersion, ScanRemoteKeyModal, ScanDoorSensorModal, DeviceSystemModal, ScanWirelessKeypadModal, WifiLockServerInfo } from './types'
+import type {
+  ScanGatewayModal,
+  ScanLockModal,
+  InitGatewayParam,
+  CycleDateParam,
+  ScanWifiModal,
+  InitGatewayModal,
+  LockVersion,
+  ScanRemoteKeyModal,
+  ScanDoorSensorModal,
+  DeviceSystemModal,
+  ScanWirelessKeypadModal,
+  WifiLockServerInfo
+} from './types'
 
 const ttlockModule = NativeModules.Ttlock;
 const ttlockEventEmitter = new NativeEventEmitter(ttlockModule);
@@ -13,7 +26,9 @@ const subscriptionMap = new Map();
 
 class TtWirelessKeypad {
 
-  static defaultCallback = function () { };
+  static defaultCallback = function () {
+  };
+
   static startScan(callback: ((scanModal: ScanWirelessKeypadModal) => void)) {
 
     let subscription = subscriptionMap.get(WirelessKeypadEvent.ScanWirelessKeypad)
@@ -55,7 +70,8 @@ class TtWirelessKeypad {
 
 class TtDoorSensor {
 
-  static defaultCallback = function () { };
+  static defaultCallback = function () {
+  };
 
   static startScan(callback: ((scanModal: ScanDoorSensorModal) => void)) {
     let subscription = subscriptionMap.get(TtDoorSensorEvent.ScanDoorSensor)
@@ -96,10 +112,10 @@ class TtDoorSensor {
 }
 
 
-
 class TtRemoteKey {
 
-  static defaultCallback = function () { };
+  static defaultCallback = function () {
+  };
 
   static startScan(callback: ((scanModal: ScanRemoteKeyModal) => void)) {
     let subscription = subscriptionMap.get(TtRemoteKeyEvent.ScanRemoteKey)
@@ -138,7 +154,8 @@ class TtRemoteKey {
 }
 
 class TtGateway {
-  static defaultCallback = function () { };
+  static defaultCallback = function () {
+  };
 
   /**
    * Scan for nearby gateways （Only newly powered gateways can be scanned）
@@ -229,7 +246,8 @@ class TtGateway {
 
 class Ttlock {
 
-  static defaultCallback = function () { };
+  static defaultCallback = function () {
+  };
 
   /**
    * Scan for nearby Bluetooth locks
@@ -543,6 +561,19 @@ class Ttlock {
   }
 
   /**
+   *
+   * @param lockData
+   * @param devMac
+   * @param success
+   * @param fail
+   */
+  static getAllValidFingerprintsWithLockData(lockData: string, devMac: string, success: null | (() => void), fail: null | ((errorCode: number, description: string) => void)) {
+    success = success || this.defaultCallback;
+    fail = fail || this.defaultCallback;
+    ttlockModule.getAllValidFingerprintsWithLockData(lockData, devMac, success, fail);
+  }
+
+  /**
    * Modify admin passcode
    * @param adminPasscode  adminPasscode must be 4-9 digits
    * @param lockData
@@ -794,15 +825,15 @@ class Ttlock {
   }
 
   /**
-     * Recover card data to the lock
-     * @param cardNumber
-     * @param cycleList Periodic unlocking. You can set it to null if you don't need it
-     * @param startDate Timestamp millisecond. The start valid time of the card.
-     * @param endDate Timestamp millisecond. The expiration time of the card
-     * @param lockData
-     * @param success
-     * @param fail
-     */
+   * Recover card data to the lock
+   * @param cardNumber
+   * @param cycleList Periodic unlocking. You can set it to null if you don't need it
+   * @param startDate Timestamp millisecond. The start valid time of the card.
+   * @param endDate Timestamp millisecond. The expiration time of the card
+   * @param lockData
+   * @param success
+   * @param fail
+   */
   static recoverCard(cardNumber: string, cycleList: null | CycleDateParam[], startDate: number, endDate: number, lockData: string, success: null | ((cardNumber: string) => void), fail: null | ((errorCode: number, description: string) => void)) {
     success = success || this.defaultCallback;
     fail = fail || this.defaultCallback;
@@ -861,6 +892,7 @@ class Ttlock {
    * Monitor phone's Bluetooth status
    * @param callback
    */
+
   /*
   static addBluetoothStateListener(callback: (state: number, description: string) => void) {
     let subscription = subscriptionMap.get(Ttlock.event.bluetoothState)
@@ -1081,9 +1113,9 @@ enum GatewayIpSettingType {
 
 export {
   Ttlock, TtGateway, TtRemoteKey, TtDoorSensor, TtWirelessKeypad,
-   BluetoothState, LockFunction, LockRecordType, LockConfigType,
-    LockPassageMode, LockControlType, LockState, ConnectState, 
-    GatewayType, GatewayIpSettingType, LockSoundVolume, 
-    TtRemoteKeyEvent, TtDoorSensorEvent, LockUnlockDirection, LockAccessoryType,
+  BluetoothState, LockFunction, LockRecordType, LockConfigType,
+  LockPassageMode, LockControlType, LockState, ConnectState,
+  GatewayType, GatewayIpSettingType, LockSoundVolume,
+  TtRemoteKeyEvent, TtDoorSensorEvent, LockUnlockDirection, LockAccessoryType,
   WirelessKeypadEvent
 }
